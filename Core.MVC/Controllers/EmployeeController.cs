@@ -15,9 +15,7 @@ namespace Core.MVC.Controllers
 {
     public class EmployeeController : Controller
     {
-
      
-
         private readonly EmployeeCommandHandler _handler;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IRoleRepository _roleRepository;
@@ -39,7 +37,6 @@ namespace Core.MVC.Controllers
         {
 
             _handler.Handle(model);
-
 
             return JsonConvert.SerializeObject(new
             {

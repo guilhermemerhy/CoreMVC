@@ -31,7 +31,7 @@
 
         if (!employee.fValidate(obj))
             return;
-        console.log(obj);
+
         $.ajax({
             url: window.location.origin + "/Employee/CreateOrUpdate",
             type: 'POST',
@@ -58,7 +58,7 @@
     fClone: () => {
         $(".btn-adicionar-campo").unbind("click").click(function () {
 
-            var divClone = $(".btn-campo-multiplo.adicionar-linha .row:last").clone();
+            let divClone = $(".btn-campo-multiplo.adicionar-linha .row:last").clone();
             $(".btn-campo-multiplo.adicionar-linha").append(divClone);
             $(".btn-campo-multiplo.adicionar-linha .row:last input").val('');
 

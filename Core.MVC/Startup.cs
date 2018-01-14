@@ -4,6 +4,7 @@ using Core.Data.UwO;
 using Core.Domain.Command.Handlers;
 using Core.Domain.Repository;
 using Core.Domain.UwO;
+using Core.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -31,17 +32,9 @@ namespace Core.MVC
             //    options.DefaultRequestCulture = new RequestCulture("pt-BR");
             //});
 
+
             services.AddMvc();
-
-
-            services.AddScoped<AppDataContext, AppDataContext>();
-
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-            services.AddTransient<IRoleRepository, RoleRepository>();
-            services.AddTransient<IDependentRepository, DependentRepository>();
-
-            services.AddTransient<EmployeeCommandHandler, EmployeeCommandHandler>();
+            services.RegisterServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +51,8 @@ namespace Core.MVC
             }
 
             var supportedCultures = new[] { new CultureInfo("pt-BR") };
+
+
 
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
