@@ -1,7 +1,6 @@
 ﻿using Core.Domain.Entities;
 using Core.Domain.Repository;
 using Core.Domain.UwO;
-using System;
 using System.Linq;
 
 namespace Core.Domain.Command.Handlers
@@ -33,6 +32,8 @@ namespace Core.Domain.Command.Handlers
                     return;
                 }
 
+
+
             if (model.Id == null)
             {
                 var employee = new Employee(model.Name, model.Email, model.Genre, model.Birth, model.Role);
@@ -48,6 +49,8 @@ namespace Core.Domain.Command.Handlers
             else
             {
                 var employee = _employeeRepository.GetById(model.Id);
+
+            
 
                 employee.Alterar(model.Name, model.Email, model.Genre, model.Birth, model.Role);
 

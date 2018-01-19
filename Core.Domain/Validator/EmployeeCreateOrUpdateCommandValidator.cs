@@ -1,8 +1,5 @@
 ﻿using Core.Domain.Command.Handlers;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Core.Domain.Validator
 {
@@ -14,9 +11,14 @@ namespace Core.Domain.Validator
                 .NotEmpty().WithMessage("O campo Nome é obrigatório")
                 .MaximumLength(60).WithMessage("O campo Nome deve ter no máximo 60 caracteres");
 
+            RuleFor(x => x.Dependent).SetCollectionValidator(new DependentValidator());
 
-            RuleFor(x => x.Email)
-                .MaximumLength(150).WithMessage("O campo Email deve ter no máximo 150 caracteres");
+
+            When(x => !string.IsNullOrWhiteSpace(x.Email), () => {
+                RuleFor(x => x.Email)
+                 .MaximumLength(150).WithMessage("O campo Email deve ter no máximo 150 caracteres")
+                 .EmailAddress().WithMessage("O campo Email deve conter um email válido");
+            });
 
         }
 

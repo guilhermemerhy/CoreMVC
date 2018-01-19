@@ -34,7 +34,7 @@ namespace Core.Domain.Command.Handlers
         public bool IsValid()
         {
             var result = new EmployeeCreateOrUpdateCommandValidator().Validate(this);
-
+          
             foreach (var error in result.Errors)
                 _items.Add(error.ErrorMessage);
 

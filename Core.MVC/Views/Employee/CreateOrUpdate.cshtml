@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "CreateOrUpdate";
     var genre = Model != null ? Model.Genre : true;
+    var birth = Model != null ? Model.Birth : null;
 }
 
 
@@ -33,7 +34,7 @@
         </div>
         <div class="form-group">
             <label asp-for="Birth" class="control-label"></label>            
-            <input type="text" class="form-control"  name="Birth" id="Birth" value="@Model.Birth"/>
+            <input type="text" class="form-control"  name="Birth" id="Birth" value="@birth"/>
         </div>
         <div class="form-group">
             <label asp-for="RoleId" class="control-label">Cargo</label>

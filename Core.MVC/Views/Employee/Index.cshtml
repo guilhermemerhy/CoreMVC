@@ -62,7 +62,7 @@
                     }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Birth)
+                    @string.Format("{0:dd/MM/yyyy}", item.Birth)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Role.Name)

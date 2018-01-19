@@ -40,7 +40,7 @@ namespace Core.MVC.Controllers
 
             return JsonConvert.SerializeObject(new
             {
-                sucess = model.Failures.Any(),
+                sucess = !model.Failures.Any(),
                 erros = model.Failures
             });
 
