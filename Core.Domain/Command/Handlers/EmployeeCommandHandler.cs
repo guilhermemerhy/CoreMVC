@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Entities;
 using Core.Domain.Repository;
 using Core.Domain.UwO;
+using Core.Domain.ValueObjects;
 using System.Linq;
 
 namespace Core.Domain.Command.Handlers
@@ -22,6 +23,7 @@ namespace Core.Domain.Command.Handlers
 
         public void Handle(EmployeeCreateOrUpdateCommand model)
         {
+
             if (!model.IsValid())
                 return;
 
@@ -33,10 +35,11 @@ namespace Core.Domain.Command.Handlers
                 }
 
 
+            var email = new Email(model.Email);
 
             if (model.Id == null)
             {
-                var employee = new Employee(model.Name, model.Email, model.Genre, model.Birth, model.Role);
+                var employee = new Employee(model.Name, email, model.Genre, model.Birth, model.Role);
                 _employeeRepository.Add(employee);
 
                 foreach (var item in model.Dependent)
@@ -52,7 +55,7 @@ namespace Core.Domain.Command.Handlers
 
             
 
-                employee.Alterar(model.Name, model.Email, model.Genre, model.Birth, model.Role);
+                employee.Alterar(model.Name, email, model.Genre, model.Birth, model.Role);
 
                 _employeeRepository.Update(employee);
 

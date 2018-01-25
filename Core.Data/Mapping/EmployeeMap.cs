@@ -22,10 +22,14 @@ namespace Core.Data
                 .HasMaxLength(100)
                 .IsRequired();
 
-            builder.Property(c => c.Email)                
-                .HasColumnType("varchar(150)")
-                .HasMaxLength(150);
 
+            builder.OwnsOne(c => c.Email, email =>
+            {
+                email.Property(c => c.Address)
+                   .HasColumnType("varchar(150)")
+                   .HasColumnName("Email")
+                   .HasMaxLength(150);
+            });
 
             builder.Property(c => c.Birth)
               .HasColumnType("Date");

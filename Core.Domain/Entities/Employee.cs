@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -9,7 +10,7 @@ namespace Core.Domain.Entities
         protected Employee() { }
 
 
-        public Employee(string name, string email, bool genre, DateTime? birth, Int16 role)
+        public Employee(string name, Email email, bool genre, DateTime? birth, Int16 role)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -29,7 +30,7 @@ namespace Core.Domain.Entities
         [DisplayName("Nome")]
         public string Name { get; private set; }
 
-        public string Email { get; private set; }
+        public Email Email { get; private set; }
 
         [DisplayName("Sexo")]
         public bool Genre { get; private set; }
@@ -48,7 +49,7 @@ namespace Core.Domain.Entities
 
 
 
-        public void Alterar(string name, string email, bool genre, DateTime? birth, Int16 role)
+        public void Alterar(string name, Email email, bool genre, DateTime? birth, Int16 role)
         {
             Name = name;
             Email = email;

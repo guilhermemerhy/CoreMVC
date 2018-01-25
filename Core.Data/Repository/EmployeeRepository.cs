@@ -42,6 +42,6 @@ namespace Core.Data.Repository
             GC.SuppressFinalize(this);
         }
 
-        public bool GetByEmail(string email, Guid? id) => db.Employees.Any(x => x.Id != id && x.Email == email);
+        public bool GetByEmail(string email, Guid? id) => db.Employees.Any(x => x.Id != id && x.Email.Address == email);
     }
 }
