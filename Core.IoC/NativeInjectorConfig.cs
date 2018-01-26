@@ -1,4 +1,5 @@
-﻿using Core.Data;
+﻿using AutoMapper;
+using Core.Data;
 using Core.Data.Repository;
 using Core.Data.UwO;
 using Core.Domain.Command.Handlers;
@@ -13,6 +14,9 @@ namespace Core.IoC
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<AppDataContext, AppDataContext>();
+
+            services.AddSingleton(Mapper.Configuration);
+            services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();

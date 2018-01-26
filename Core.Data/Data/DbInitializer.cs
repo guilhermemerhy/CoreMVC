@@ -1,9 +1,4 @@
-﻿using Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.Data.Data
+﻿namespace Core.Data.Data
 {
     public static class DbInitializer
     {

@@ -1,9 +1,4 @@
-﻿using Core.Data;
-using Core.Data.Repository;
-using Core.Data.UwO;
-using Core.Domain.Command.Handlers;
-using Core.Domain.Repository;
-using Core.Domain.UwO;
+﻿using AutoMapper;
 using Core.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,7 +29,9 @@ namespace Core.MVC
 
 
             services.AddMvc();
+            services.AddAutoMapper();
             services.RegisterServices();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

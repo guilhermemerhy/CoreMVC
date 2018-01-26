@@ -2,7 +2,7 @@
 using Core.Domain.Repository;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Core.Data.Repository
 {
@@ -27,10 +27,14 @@ namespace Core.Data.Repository
             db.Dependents.Remove(obj);
         }
 
+        public IEnumerable<Dependent> GetAllByEmployee(Guid EmployeeId) => db.Dependents.Where(w => w.EmployeeId == EmployeeId).ToList();
+
         public void Dispose()
         {
             db.Dispose();
             GC.SuppressFinalize(this);
         }
+
+       
     }
 }

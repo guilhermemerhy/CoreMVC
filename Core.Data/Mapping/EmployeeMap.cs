@@ -1,9 +1,6 @@
 ﻿using Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Core.Data
 {
@@ -15,7 +12,8 @@ namespace Core.Data
             builder.ToTable("Employee");
 
             builder.Property(c => c.Id)
-                 .HasColumnName("Id");
+                 .HasColumnName("Id")
+                 .ValueGeneratedNever();
 
             builder.Property(c => c.Name)
                 .HasColumnType("varchar(100)")

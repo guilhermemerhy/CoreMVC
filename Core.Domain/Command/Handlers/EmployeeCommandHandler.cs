@@ -2,6 +2,7 @@
 using Core.Domain.Repository;
 using Core.Domain.UwO;
 using Core.Domain.ValueObjects;
+using System;
 using System.Linq;
 
 namespace Core.Domain.Command.Handlers
@@ -19,7 +20,7 @@ namespace Core.Domain.Command.Handlers
             _unitOfWork = unitOfWork;
             _dependentRepository = dependentRepository;
         }
-  
+
 
         public void Handle(EmployeeCreateOrUpdateCommand model)
         {
@@ -35,11 +36,14 @@ namespace Core.Domain.Command.Handlers
                 }
 
 
+
             var email = new Email(model.Email);
 
             if (model.Id == null)
             {
-                var employee = new Employee(model.Name, email, model.Genre, model.Birth, model.Role);
+                #region Insert
+
+                var employee = new Employee(Guid.NewGuid(), model.Name, email, model.Genre, model.Birth, model.Role);
                 _employeeRepository.Add(employee);
 
                 foreach (var item in model.Dependent)
@@ -48,32 +52,30 @@ namespace Core.Domain.Command.Handlers
                 }
 
                 _employeeRepository.Add(employee);
+
+                #endregion
             }
             else
             {
-                var employee = _employeeRepository.GetById(model.Id);
-
-            
-
-                employee.Alterar(model.Name, email, model.Genre, model.Birth, model.Role);
+                #region Update                
+                var employee = new Employee((Guid)model.Id, model.Name, email, model.Genre, model.Birth, model.Role);
 
                 _employeeRepository.Update(employee);
 
                 if (model.Dependent.Any())
                 {
-                    foreach (var item in employee.Dependent)
+                    foreach (var item in _dependentRepository.GetAllByEmployee((Guid)model.Id))
                         _dependentRepository.Remove(item);
 
                     foreach (var item in model.Dependent)
-                    {
                         _dependentRepository.Add(new Dependent(item.Name, employee.Id));
-                    }
                 }
+
+                #endregion
             }
 
-            _unitOfWork.Commit();
 
-            return;
+            _unitOfWork.Commit();
 
         }
 

@@ -1,11 +1,6 @@
 ﻿using Core.Data.Mapping;
 using Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace Core.Data
 {
@@ -30,8 +25,9 @@ namespace Core.Data
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {                      
-            optionsBuilder.UseSqlServer("server=.\\SQLEXPRESS;initial catalog=Core;Integrated Security=False;User Id=developer;Password=123456;Connection Timeout=360;MultipleActiveResultSets=True;Application Name=Core;Pooling=false;Max Pool Size=500;Min Pool Size=20;Connection lifetime=300");
+        {
+            // .\\SQLEXPRESS
+            optionsBuilder.UseSqlServer("server=(LocalDb)\\MSSQLLocalDB;initial catalog=Core;Integrated Security=False;User Id=developer;Password=123456;Connection Timeout=360;MultipleActiveResultSets=True;Application Name=Core;Pooling=false;Max Pool Size=500;Min Pool Size=20;Connection lifetime=300");
         }
     }
 }

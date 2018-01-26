@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Core.Domain.Entities.Employee>
+﻿@model IEnumerable<Core.MVC.Models.EmployeeViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -47,7 +47,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.DisplayFor(modelItem => item.Email.Address)
                 </td>
                 <td>
                     @if (item.Genre)

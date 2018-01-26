@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.Domain.ValueObjects
+﻿namespace Core.Domain.ValueObjects
 {
     public class Email 
     {

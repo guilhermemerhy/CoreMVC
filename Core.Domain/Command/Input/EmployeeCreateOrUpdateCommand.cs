@@ -2,11 +2,10 @@
 using Core.Domain.Validator;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Core.Domain.Command.Handlers
 {
-   public class EmployeeCreateOrUpdateCommand
+    public class EmployeeCreateOrUpdateCommand
     {
         private readonly IList<string> _items;
 

@@ -1,7 +1,6 @@
 ﻿using Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Core.Domain.Repository
 {
@@ -9,5 +8,6 @@ namespace Core.Domain.Repository
     {
         void Add(Dependent obj);
         void Remove(Dependent obj);
+        IEnumerable<Dependent> GetAllByEmployee(Guid EmployeeId);
     }
 }

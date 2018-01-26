@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Core.Data.Repository
 {
@@ -33,7 +32,7 @@ namespace Core.Data.Repository
 
         public void Update(Employee obj)
         {
-            db.Entry(obj).State = EntityState.Modified;
+            db.Employees.Update(obj);
         }
 
         public void Dispose()

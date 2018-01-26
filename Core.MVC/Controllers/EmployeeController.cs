@@ -1,36 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Core.Domain.Command;
 using Core.Domain.Command.Handlers;
 using Core.Domain.Repository;
-using Microsoft.AspNetCore.Http;
+using Core.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Core.MVC.Controllers
 {
     public class EmployeeController : Controller
     {
-     
+        private readonly IMapper _mapper;
         private readonly EmployeeCommandHandler _handler;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IRoleRepository _roleRepository;
 
-        public EmployeeController(EmployeeCommandHandler handler, IEmployeeRepository employeeRepository, IRoleRepository roleRepository) 
+        public EmployeeController(EmployeeCommandHandler handler, IEmployeeRepository employeeRepository, IRoleRepository roleRepository, IMapper mapper) 
         {
             _handler = handler;
             _employeeRepository = employeeRepository;
             _roleRepository = roleRepository;
+            _mapper = mapper;
         }
 
 
-        public IActionResult Index() =>
-            View(_employeeRepository.GetAll());
-
+        public IActionResult Index() => View(_mapper.Map<IEnumerable<EmployeeViewModel>>(_employeeRepository.GetAll()));
 
         [HttpPost]
         public string CreateOrUpdate([FromBody]EmployeeCreateOrUpdateCommand model)
@@ -65,7 +63,7 @@ namespace Core.MVC.Controllers
 
             ViewBag.Role = new SelectList(_roleRepository.GetAll(), "Id", "Name", employee.RoleId);
 
-            return View("CreateOrUpdate", employee);
+            return View("CreateOrUpdate", _mapper.Map<EmployeeViewModel>(employee));
         }
 
 
