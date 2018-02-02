@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Core.Data\Core.Data.csproj" />
     <ProjectReference Include="..\Core.Domain\Core.Domain.csproj" />
+    <ProjectReference Include="..\Core.Infra.CrossCutting.Identity\Core.Infra.CrossCutting.Identity.csproj" />
   </ItemGroup>
 
 </Project>

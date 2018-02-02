@@ -6,12 +6,14 @@ using Core.Domain.Command;
 using Core.Domain.Command.Handlers;
 using Core.Domain.Repository;
 using Core.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
 namespace Core.MVC.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         private readonly IMapper _mapper;
