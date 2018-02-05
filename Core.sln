@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Data", "Core.Data\Core
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.IoC", "Core.IoC\Core.IoC.csproj", "{B92C4AD0-7813-435D-B681-5ABF4AD4AEF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Infra.CrossCutting.Identity", "Core.Infra.CrossCutting.Identity\Core.Infra.CrossCutting.Identity.csproj", "{019B7625-25BB-4829-AB39-19630A579968}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Infra.CrossCutting.Identity", "Core.Infra.CrossCutting.Identity\Core.Infra.CrossCutting.Identity.csproj", "{019B7625-25BB-4829-AB39-19630A579968}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Test", "Core.Test\Core.Test.csproj", "{3F03CAEC-C7F2-4E0C-B77B-55A2150B99F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{019B7625-25BB-4829-AB39-19630A579968}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{019B7625-25BB-4829-AB39-19630A579968}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{019B7625-25BB-4829-AB39-19630A579968}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F03CAEC-C7F2-4E0C-B77B-55A2150B99F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F03CAEC-C7F2-4E0C-B77B-55A2150B99F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F03CAEC-C7F2-4E0C-B77B-55A2150B99F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F03CAEC-C7F2-4E0C-B77B-55A2150B99F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

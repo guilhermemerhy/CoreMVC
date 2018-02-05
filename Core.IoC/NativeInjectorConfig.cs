@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Core.Data;
+using Core.Data.Cache;
 using Core.Data.Repository;
 using Core.Data.UwO;
+using Core.Domain.Cache;
 using Core.Domain.Command.Handlers;
 using Core.Domain.Repository;
 using Core.Domain.UwO;
@@ -24,6 +26,7 @@ namespace Core.IoC
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IDependentRepository, DependentRepository>();
+            services.AddTransient<ICache, Cache>();
 
             // Domain - Commands
             services.AddTransient<EmployeeCommandHandler, EmployeeCommandHandler>();
