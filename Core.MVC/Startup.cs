@@ -8,12 +8,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Globalization;
+using System.IO.Compression;
 
 namespace Core.MVC
 {
@@ -35,8 +38,14 @@ namespace Core.MVC
 
 
             services.AddMemoryCache();
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
             services.AddAutoMapper();
+            
+            //IoC
             services.RegisterServices();
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -60,6 +69,14 @@ namespace Core.MVC
               .AddEntityFrameworkStores<ApplicationDbContext>()
               .AddDefaultTokenProviders();
 
+            //Compression
+            services.Configure<GzipCompressionProviderOptions>(
+              options => options.Level = CompressionLevel.Optimal);
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<GzipCompressionProvider>();
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,6 +97,7 @@ namespace Core.MVC
 
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseResponseCompression();
 
             app.UseMvc(routes =>
             {

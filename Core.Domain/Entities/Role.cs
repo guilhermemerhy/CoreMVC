@@ -13,5 +13,10 @@ namespace Core.Domain.Entities
 
 
         protected Role() { }
+
+        public Role(string name)
+        {
+            Name = name;
+        }
     }
 }

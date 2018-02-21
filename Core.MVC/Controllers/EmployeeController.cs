@@ -82,7 +82,6 @@ namespace Core.MVC.Controllers
         }
 
         [HttpPost, ActionName(nameof(Delete))]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(EmployeeRemoveCommand command)
         {
             _handler.Handle(command);

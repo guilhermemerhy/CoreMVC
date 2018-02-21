@@ -44,8 +44,7 @@ namespace Core.Domain.Command.Handlers
                 #region Insert
 
                 var employee = new Employee(Guid.NewGuid(), model.Name, email, model.Genre, model.Birth, model.Role);
-                _employeeRepository.Add(employee);
-
+                
                 foreach (var item in model.Dependent)
                 {
                     employee.AddDependent(new Dependent(item.Name, employee.Id));
