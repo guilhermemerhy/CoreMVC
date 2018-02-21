@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore;
+using Core.Data.Data;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Core.MVC
@@ -10,9 +11,15 @@ namespace Core.MVC
             BuildWebHost(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+       public static IWebHost BuildWebHost(string[] args)
+       {
+          var host =  WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
+
+            DbInitializer.Initialize();
+
+            return host;
+        }
     }
 }
