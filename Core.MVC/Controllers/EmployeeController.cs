@@ -33,6 +33,7 @@ namespace Core.MVC.Controllers
         public IActionResult Index() => View(_mapper.Map<IEnumerable<EmployeeViewModel>>(_employeeRepository.GetAll()));
 
         [HttpPost]
+        [IgnoreAntiforgeryToken]
         public string CreateOrUpdate([FromBody]EmployeeCreateOrUpdateCommand model)
         {
 
