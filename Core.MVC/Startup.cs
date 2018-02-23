@@ -41,6 +41,9 @@ namespace Core.MVC
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            })
+            .AddJsonOptions(options => {
+                options.SerializerSettings.DateFormatString = "dd/MM/yyyy";
             });
 
             services.AddAutoMapper();
