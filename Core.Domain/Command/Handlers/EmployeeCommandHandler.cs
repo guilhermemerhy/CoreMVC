@@ -61,14 +61,14 @@ namespace Core.Domain.Command.Handlers
 
                 _employeeRepository.Update(employee);
 
-                if (model.Dependent.Any())
-                {
-                    foreach (var item in _dependentRepository.GetAllByEmployee((Guid)model.Id))
-                        _dependentRepository.Remove(item);
+                var dependents = _dependentRepository.GetAllByEmployee((Guid)model.Id);
 
+                if(dependents.Any())
+                    _dependentRepository.RemoveAll(dependents);
+
+                if (model.Dependent.Any())
                     foreach (var item in model.Dependent)
                         _dependentRepository.Add(new Dependent(item.Name, employee.Id));
-                }
 
                 #endregion
             }
@@ -84,8 +84,7 @@ namespace Core.Domain.Command.Handlers
             var employee = _employeeRepository.GetById(command.Id);
 
             if (employee.Dependent.Any())
-                foreach (var item in employee.Dependent)
-                    _dependentRepository.Remove(item);
+                _dependentRepository.RemoveAll(employee.Dependent);
 
             _employeeRepository.Remove(employee);
 

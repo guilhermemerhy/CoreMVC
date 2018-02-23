@@ -27,6 +27,11 @@ namespace Core.Data.Repository
             db.Dependents.Remove(obj);
         }
 
+        public void RemoveAll(IEnumerable<Dependent> obj)
+        {
+            db.Dependents.RemoveRange(obj);
+        }
+
         public IEnumerable<Dependent> GetAllByEmployee(Guid EmployeeId) => db.Dependents.Where(w => w.EmployeeId == EmployeeId).ToList();
 
         public void Dispose()
@@ -35,6 +40,6 @@ namespace Core.Data.Repository
             GC.SuppressFinalize(this);
         }
 
-       
+      
     }
 }

@@ -8,6 +8,7 @@ namespace Core.Domain.Repository
     {
         void Add(Dependent obj);
         void Remove(Dependent obj);
+        void RemoveAll(IEnumerable<Dependent> obj);
         IEnumerable<Dependent> GetAllByEmployee(Guid EmployeeId);
     }
 }
