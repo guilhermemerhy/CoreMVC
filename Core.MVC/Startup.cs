@@ -4,8 +4,11 @@ using Core.Infra.CrossCutting.Identity.Data;
 using Core.Infra.CrossCutting.Identity.Models;
 using Core.IoC;
 using Core.MVC.Models;
+using Elmah.Io.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +41,7 @@ namespace Core.MVC
 
 
             services.AddMemoryCache();
+
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -72,12 +76,31 @@ namespace Core.MVC
               .AddEntityFrameworkStores<ApplicationDbContext>()
               .AddDefaultTokenProviders();
 
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+              .AddCookie(o => {
+                  o.LoginPath = new PathString("/login");
+                  o.AccessDeniedPath = new PathString("/home/access-denied");
+              })
+              .AddFacebook(o =>
+              {
+                  o.AppId = Configuration["Facebook:AppId"];
+                  o.AppSecret = Configuration["Facebook:AppSecret"];
+              });
+
             //Compression
             services.Configure<GzipCompressionProviderOptions>(
               options => options.Level = CompressionLevel.Optimal);
             services.AddResponseCompression(options =>
             {
                 options.Providers.Add<GzipCompressionProvider>();
+            });
+
+            //Elmah
+            services.AddElmahIo(o =>
+            {
+                o.ApiKey = Configuration["Elmah:ApiKey"];
+                o.LogId = new Guid(Configuration["Elmah:LogId"]);
             });
 
         }
@@ -101,6 +124,7 @@ namespace Core.MVC
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseResponseCompression();
+            app.UseElmahIo();
 
             app.UseMvc(routes =>
             {
