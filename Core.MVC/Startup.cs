@@ -69,9 +69,7 @@ namespace Core.MVC
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
-
-
-
+                               
             })
               .AddEntityFrameworkStores<ApplicationDbContext>()
               .AddDefaultTokenProviders();
@@ -80,13 +78,15 @@ namespace Core.MVC
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
               .AddCookie(o => {
                   o.LoginPath = new PathString("/login");
-                  o.AccessDeniedPath = new PathString("/home/access-denied");
-              })
+                  o.AccessDeniedPath = new PathString("/home/access-denied");                  
+              })              
               .AddFacebook(o =>
               {
-                  o.AppId = Configuration["Facebook:AppId"];
-                  o.AppSecret = Configuration["Facebook:AppSecret"];
+                  o.AppId = Configuration["Facebook:AppId"]; //Manager User Secret
+                  o.AppSecret = Configuration["Facebook:AppSecret"]; //Manager User Secret
               });
+
+
 
             //Compression
             services.Configure<GzipCompressionProviderOptions>(
@@ -99,8 +99,8 @@ namespace Core.MVC
             //Elmah
             services.AddElmahIo(o =>
             {
-                o.ApiKey = Configuration["Elmah:ApiKey"];
-                o.LogId = new Guid(Configuration["Elmah:LogId"]);
+                o.ApiKey = Configuration["Elmah:ApiKey"]; //Manager User Secret
+                o.LogId = new Guid(Configuration["Elmah:LogId"]); //Manager User Secret
             });
 
         }
