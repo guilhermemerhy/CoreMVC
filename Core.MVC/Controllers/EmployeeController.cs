@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Core.Domain.Command;
 using Core.Domain.Command.Handlers;
@@ -30,14 +31,14 @@ namespace Core.MVC.Controllers
         }
 
 
-        public IActionResult Index() => View(_mapper.Map<IEnumerable<EmployeeViewModel>>(_employeeRepository.GetAll()));
+        public async Task<IActionResult> Index() => View(_mapper.Map<IEnumerable<EmployeeViewModel>>(await _employeeRepository.GetAll()));
 
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public string CreateOrUpdate([FromBody]EmployeeCreateOrUpdateCommand model)
+        public async Task<string> CreateOrUpdate([FromBody]EmployeeCreateOrUpdateCommand model)
         {
 
-            _handler.Handle(model);
+           await _handler.Handle(model);
 
             return JsonConvert.SerializeObject(new
             {
@@ -47,35 +48,35 @@ namespace Core.MVC.Controllers
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewBag.Role = new SelectList(_roleRepository.GetAll(), "Id", "Name");
+            ViewBag.Role = new SelectList(await _roleRepository.GetAll(), "Id", "Name");
             return View("CreateOrUpdate");
         }
 
 
-        public IActionResult Edit(Guid? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
                 return NotFound();
 
-            var employee = _employeeRepository.GetById(id);
+            var employee = await _employeeRepository.GetById(id);
             if (employee == null)
                 return NotFound();
 
 
-            ViewBag.Role = new SelectList(_roleRepository.GetAll(), "Id", "Name", employee.RoleId);
+            ViewBag.Role = new SelectList(await _roleRepository.GetAll(), "Id", "Name", employee.RoleId);
 
             return View("CreateOrUpdate", _mapper.Map<EmployeeViewModel>(employee));
         }
 
 
-        public IActionResult Delete(Guid? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
                 return NotFound();
 
-            var employee = _employeeRepository.GetById(id);
+            var employee = await _employeeRepository.GetById(id);
             if (employee == null)
                 return NotFound();
 
@@ -83,9 +84,9 @@ namespace Core.MVC.Controllers
         }
 
         [HttpPost, ActionName(nameof(Delete))]
-        public IActionResult DeleteConfirmed(EmployeeRemoveCommand command)
+        public async Task<IActionResult> DeleteConfirmed(EmployeeRemoveCommand command)
         {
-            _handler.Handle(command);
+            await _handler.Handle(command);
             return RedirectToAction(nameof(Index));
         }
 

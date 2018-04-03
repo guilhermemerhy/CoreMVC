@@ -4,6 +4,7 @@ using Core.Domain.UwO;
 using Core.Domain.ValueObjects;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.Domain.Command.Handlers
 {
@@ -22,14 +23,15 @@ namespace Core.Domain.Command.Handlers
         }
 
 
-        public void Handle(EmployeeCreateOrUpdateCommand model)
+        public async Task Handle(EmployeeCreateOrUpdateCommand model)
         {
+            var isValid = await model.IsValid();
 
-            if (!model.IsValid())
+            if (!isValid)
                 return;
 
             if (!string.IsNullOrWhiteSpace(model.Email))
-                if (_employeeRepository.GetByEmail(model.Email, model.Id))
+                if (await _employeeRepository.GetByEmail(model.Email, model.Id))
                 {
                     model.Failures.Add("Já existe um Email cadastrado");
                     return;
@@ -50,7 +52,7 @@ namespace Core.Domain.Command.Handlers
                     employee.AddDependent(new Dependent(item.Name, employee.Id));
                 }
 
-                _employeeRepository.Add(employee);
+                await _employeeRepository.Add(employee);
 
                 #endregion
             }
@@ -61,34 +63,34 @@ namespace Core.Domain.Command.Handlers
 
                 _employeeRepository.Update(employee);
 
-                var dependents = _dependentRepository.GetAllByEmployee((Guid)model.Id);
+                var dependents = await _dependentRepository.GetAllByEmployee((Guid)model.Id);
 
                 if(dependents.Any())
                     _dependentRepository.RemoveAll(dependents);
 
                 if (model.Dependent.Any())
                     foreach (var item in model.Dependent)
-                        _dependentRepository.Add(new Dependent(item.Name, employee.Id));
+                      await _dependentRepository.Add(new Dependent(item.Name, employee.Id));
 
                 #endregion
             }
 
 
-            _unitOfWork.Commit();
+           await _unitOfWork.Commit();
 
         }
 
 
-        public void Handle(EmployeeRemoveCommand command)
+        public async Task Handle(EmployeeRemoveCommand command)
         {
-            var employee = _employeeRepository.GetById(command.Id);
+            var employee = await _employeeRepository.GetById(command.Id);
 
             if (employee.Dependent.Any())
                 _dependentRepository.RemoveAll(employee.Dependent);
 
             _employeeRepository.Remove(employee);
 
-            _unitOfWork.Commit();
+            await _unitOfWork.Commit();
         }
 
     }

@@ -1,8 +1,10 @@
 ﻿using Core.Domain.Entities;
 using Core.Domain.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.Data.Repository
 {
@@ -16,23 +18,19 @@ namespace Core.Data.Repository
         }
 
 
-        public void Add(Dependent obj)
+        public async Task Add(Dependent obj)
         {
-            db.Dependents.Add(obj);
+           await db.Dependents.AddAsync(obj);
         }
 
-
-        public void Remove(Dependent obj)
-        {
-            db.Dependents.Remove(obj);
-        }
 
         public void RemoveAll(IEnumerable<Dependent> obj)
         {
             db.Dependents.RemoveRange(obj);
         }
 
-        public IEnumerable<Dependent> GetAllByEmployee(Guid EmployeeId) => db.Dependents.Where(w => w.EmployeeId == EmployeeId).ToList();
+        public async Task<IEnumerable<Dependent>> GetAllByEmployee(Guid EmployeeId) =>
+            await db.Dependents.Where(w => w.EmployeeId == EmployeeId).ToListAsync();
 
         public void Dispose()
         {

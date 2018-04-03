@@ -6,6 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.Data.Repository
 {
@@ -22,14 +23,14 @@ namespace Core.Data.Repository
         }
 
 
-        public IEnumerable<Role> GetAll()
+        public async Task<IEnumerable<Role>> GetAll()
         {
             var chaveDoCache = "role";
             dynamic role;
 
             if (!_cache.GetKey(chaveDoCache, out role))
             {               
-                 role = db.Roles.AsNoTracking().ToList();
+                 role = await db.Roles.AsNoTracking().ToListAsync();
 
                 _cache.SetKey(chaveDoCache, role, DateTime.Now.AddHours(1));
             }

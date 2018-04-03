@@ -2,6 +2,7 @@
 using Core.Domain.Validator;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core.Domain.Command.Handlers
 {
@@ -30,9 +31,9 @@ namespace Core.Domain.Command.Handlers
             _items = new List<string>();
         }
 
-        public bool IsValid()
+        public async Task<bool> IsValid()
         {
-            var result = new EmployeeCreateOrUpdateCommandValidator().Validate(this);
+            var result = await new EmployeeCreateOrUpdateCommandValidator().ValidateAsync(this);
           
             foreach (var error in result.Errors)
                 _items.Add(error.ErrorMessage);

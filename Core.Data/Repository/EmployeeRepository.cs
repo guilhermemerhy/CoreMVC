@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Core.Data.Repository
 {
@@ -16,18 +17,18 @@ namespace Core.Data.Repository
             db = _db;
         }
 
-        public void Add(Employee obj)
+        public async Task Add(Employee obj)
         {
-            db.Employees.Add(obj);
+           await db.Employees.AddAsync(obj);
         }
 
-        public IEnumerable<Employee> GetAll() => db.Employees.AsNoTracking().Include(x => x.Role).Include(x => x.Dependent).ToList();
+        public async Task<IEnumerable<Employee>> GetAll() => await db.Employees.AsNoTracking().Include(x => x.Role).Include(x => x.Dependent).ToListAsync();
 
-        public Employee GetById(Guid? id) => db.Employees.Include(x => x.Role).Include(x => x.Dependent).FirstOrDefault(f => f.Id == id);
+        public async Task<Employee> GetById(Guid? id) => await db.Employees.Include(x => x.Role).Include(x => x.Dependent).FirstOrDefaultAsync(f => f.Id == id);
 
         public void Remove(Employee obj)
         {
-            db.Employees.Remove(obj);
+             db.Employees.Remove(obj);
         }
 
         public void Update(Employee obj)
@@ -41,6 +42,6 @@ namespace Core.Data.Repository
             GC.SuppressFinalize(this);
         }
 
-        public bool GetByEmail(string email, Guid? id) => db.Employees.Any(x => x.Id != id && x.Email.Address == email);
+        public async Task<bool> GetByEmail(string email, Guid? id) => await db.Employees.AnyAsync(x => x.Id != id && x.Email.Address == email);
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Core.Domain.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core.Domain.Repository
 {
     public interface IRoleRepository
     {
-        IEnumerable<Role> GetAll();
+        Task<IEnumerable<Role>> GetAll();
     }
 }
