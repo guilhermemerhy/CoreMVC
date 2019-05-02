@@ -18,8 +18,6 @@ namespace Core.IoC
         {
             services.AddScoped<AppDataContext, AppDataContext>();
 
-            services.AddSingleton(Mapper.Configuration);
-            services.AddScoped<IMapper>(sp => new Mapper(sp.GetRequiredService<IConfigurationProvider>(), sp.GetService));
 
             // Infra - Data
             services.AddScoped<IUnitOfWork, UnitOfWork>();
